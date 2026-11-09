@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071426">
+<title>MATCHPASS KENYA | Your Ticket. Your Experience.</title>
+<meta name="description" content="Discover football, concerts, festivals and events. Book your next experience with MatchPass Kenya.">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#071426;--panel:#10223a;--gold:#ffbd45;--white:#fff;--muted:#a8b5c8}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--white);line-height:1.6}
+header{padding:17px 6%;display:flex;align-items:center;justify-content:space-between;background:#09182b;border-bottom:1px solid #20344c;position:sticky;top:0;z-index:10}
+.logo{font-size:22px;font-weight:900;letter-spacing:1px}
+.logo span{color:var(--gold)}
+nav a{color:white;text-decoration:none;margin-left:18px;font-size:14px}
+.hero{padding:75px 6% 65px;background:linear-gradient(110deg,#102b49,#071426 75%);text-align:center}
+.hero h1{font-size:clamp(34px,7vw,62px);line-height:1.12;margin-bottom:18px}
+.hero h1 span{color:var(--gold)}
+.hero p{color:var(--muted);max-width:620px;margin:0 auto 25px}
+.btn{display:inline-block;background:var(--gold);color:#101b2a;padding:12px 23px;border:0;border-radius:7px;font-weight:bold;text-decoration:none;cursor:pointer}
+.btn:hover{opacity:.88}
+section{padding:48px 6%}
+.section-title{font-size:27px;margin-bottom:8px}
+.section-sub{color:var(--muted);margin-bottom:23px}
+.categories{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:25px}
+.category{border:1px solid #354b65;color:white;background:transparent;padding:9px 16px;border-radius:30px;cursor:pointer}
+.category.active,.category:hover{background:var(--gold);color:#101b2a;border-color:var(--gold)}
+.search{width:100%;max-width:450px;padding:13px;border-radius:7px;border:1px solid #354b65;background:#10223a;color:white;margin-bottom:22px}
+.events{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+.event{background:var(--panel);border:1px solid #263d57;border-radius:12px;overflow:hidden}
+.event-art{height:145px;display:flex;align-items:center;justify-content:center;font-size:55px;background:linear-gradient(135deg,#173d60,#18243b)}
+.event-info{padding:18px}
+.tag{font-size:11px;color:var(--gold);font-weight:bold;text-transform:uppercase}
+.event h3{font-size:19px;margin:7px 0}
+.event p{font-size:13px;color:var(--muted);margin:5px 0}
+.event .btn{margin-top:13px;width:100%;text-align:center}
+.about{background:#0c1d32}
+.about-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:25px;margin-top:25px}
+.about-card{padding:20px;background:var(--panel);border-radius:10px}
+.about-card h3{color:var(--gold);margin-bottom:8px}
+footer{padding:30px 6%;text-align:center;color:var(--muted);font-size:13px}
+footer a{color:var(--gold);text-decoration:none}
+.modal{display:none;position:fixed;inset:0;background:#000b;z-index:20;align-items:center;justify-content:center;padding:18px}
+.modal.show{display:flex}
+.modal-box{background:#10223a;padding:25px;border-radius:12px;width:100%;max-width:420px;max-height:90vh;overflow:auto}
+.modal-box h2{margin-bottom:12px}
+.modal-box input,.modal-box select{width:100%;padding:12px;margin:8px 0;background:#071426;border:1px solid #354b65;border-radius:6px;color:white}
+.modal-box label{font-size:13px;color:var(--muted)}
+.close{float:right;background:none;border:0;color:white;font-size:25px;cursor:pointer}
+.notice{background:#332b19;border:1px solid #80622c;color:#ffe0a0;padding:12px;border-radius:7px;font-size:13px;margin:12px 0}
+@media(max-width:600px){header{padding:14px 4%}nav a{margin-left:9px;font-size:12px}.logo{font-size:18px}.hero{padding:60px 5%}section{padding:38px 5%}}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">MATCH<span>PASS</span> KENYA</div>
+  <nav>
+    <a href="#events">Events</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <h1>YOUR TICKET.<br><span>YOUR EXPERIENCE.</span></h1>
+  <p>Discover exciting football matches, concerts, festivals and unforgettable experiences across Kenya.</p>
+  <a href="#events" class="btn">EXPLORE EVENTS</a>
+</div>
+
+<section id="events">
+  <h2 class="section-title">Discover Events</h2>
+  <p class="section-sub">Find your next experience with MatchPass Kenya.</p>
+
+  <input class="search" id="search" type="search" placeholder="Search events..." oninput="renderEvents()">
+
+  <div class="categories">
+    <button class="category active" onclick="filterEvents('All',this)">All Events</button>
+    <button class="category" onclick="filterEvents('Football',this)">Football</button>
+    <button class="category" onclick="filterEvents('Concerts',this)">Concerts</button>
+    <button class="category" onclick="filterEvents('Festivals',this)">Festivals</button>
+    <button class="category" onclick="filterEvents('Other',this)">Other</button>
+  </div>
+
+  <div class="events" id="eventList"></div>
+</section>
+
+<section class="about" id="about">
+  <h2 class="section-title">Why MatchPass Kenya?</h2>
+  <p class="section-sub">One destination for the experiences that bring people together.</p>
+
+  <div class="about-grid">
+    <div class="about-card">
+      <h3>⚽ Diverse Events</h3>
+      <p>Explore football, live music, entertainment and more.</p>
+    </div>
+    <div class="about-card">
+      <h3>🎟️ Easy Booking</h3>
+      <p>Find an event and submit your ticket booking request.</p>
+    </div>
+    <div class="about-card">
+      <h3>🇰🇪 Made for Kenya</h3>
+      <p>A Kenyan-focused platform for discovering great experiences.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2 class="section-title">Get in Touch</h2>
+  <p class="section-sub">Questions about an event or booking?</p>
+  <p>Email: <a href="mailto:nexoradigitalke45@gmail.com" style="color:#ffbd45">nexoradigitalke45@gmail.com</a></p>
+  <p>Phone: <a href="tel:+254790522994" style="color:#ffbd45">+254 790 522 994</a></p>
+</section>
+
+<footer>
+  <p>© 2026 MATCHPASS KENYA. All rights reserved.</p>
+  <p>Your Ticket. Your Experience.</p>
+</footer>
+
+<div class="modal" id="bookingModal">
+  <div class="modal-box">
+    <button class="close" onclick="closeBooking()">×</button>
+    <h2>Request Your Ticket</h2>
+    <p id="selectedEvent" style="color:#ffbd45"></p>
+
+    <div class="notice">
+       Limited slots available!!! Book early!! 
+    </div>
+
+    <form onsubmit="submitBooking(event)">
+      <label>Full name</label>
+      <input id="customerName" required placeholder="Enter your full name">
+
+      <label>Email address</label>
+      <input id="customerEmail" type="email" required placeholder="Enter your email">
+
+      <label>Phone number</label>
+      <input id="customerPhone" type="tel" required placeholder="07XXXXXXXX">
+
+      <label>Number of tickets</label>
+      <select id="ticketQuantity">
+        <option value="1">1 ticket</option>
+        <option value="2">2 tickets</option>
+        <option value="3">3 tickets</option>
+        <option value="4">4 tickets</option>
+        <option value="5">5 tickets</option>
+      </select>
+
+      <button class="btn" type="submit" style="width:100%;margin-top:12px">Submit Ticket Request</button>
+    </form>
+  </div>
+</div>
+
+<script>
+const events = [
+ {name:"Football Events",category:"Football",icon:"⚽",date:"Dates to be announced",venue:"Kenya",description:"Discover upcoming football matches."},
+ {name:"Live Music Concerts",category:"Concerts",icon:"🎤",date:"Dates to be announced",venue:"Kenya",description:"Find exciting live music experiences."},
+ {name:"Festivals & Celebrations",category:"Festivals",icon:"🎉",date:"Dates to be announced",venue:"Kenya",description:"Explore festivals and entertainment."},
+ {name:"Conferences & Experiences",category:"Other",icon:"🎫",date:"Dates to be announced",venue:"Kenya",description:"Discover conferences and special events."}
+];
+
+let currentCategory="All";
+let selectedEvent="";
+
+function renderEvents(){
+ const search=document.getElementById("search").value.toLowerCase();
+ const filtered=events.filter(e=>
+  (currentCategory==="All"||e.category===currentCategory)&&
+  (e.name.toLowerCase().includes(search)||e.category.toLowerCase().includes(search))
+ );
+ const container=document.getElementById("eventList");
+ container.innerHTML="";
+ filtered.forEach(e=>{
+  const card=document.createElement("div");
+  card.className="event";
+  const art=document.createElement("div");
+  art.className="event-art";
+  art.textContent=e.icon;
+  const info=document.createElement("div");
+  info.className="event-info";
+  const tag=document.createElement("div");
+  tag.className="tag";
+  tag.textContent=e.category;
+  const title=document.createElement("h3");
+  title.textContent=e.name;
+  const date=document.createElement("p");
+  date.textContent="📅 "+e.date;
+  const venue=document.createElement("p");
+  venue.textContent="📍 "+e.venue;
+  const desc=document.createElement("p");
+  desc.textContent=e.description;
+  const button=document.createElement("button");
+  button.className="btn";
+  button.style.width="100%";
+  button.textContent="Explore / Request";
+  button.onclick=()=>openBooking(e.name);
+  info.append(tag,title,date,venue,desc,button);
+  card.append(art,info);
+  container.append(card);
+ });
+ if(filtered.length===0)container.textContent="No matching events found.";
+}
+
+function filterEvents(category,button){
+ currentCategory=category;
+ document.querySelectorAll(".category").forEach(b=>b.classList.remove("active"));
+ button.classList.add("active");
+ renderEvents();
+}
+
+function openBooking(name){
+ selectedEvent=name;
+ document.getElementById("selectedEvent").textContent=name;
+ document.getElementById("bookingModal").classList.add("show");
+}
+
+function closeBooking(){
+ document.getElementById("bookingModal").classList.remove("show");
+}
+
+function submitBooking(e){
+ e.preventDefault();
+ closeBooking();
+}
+
+renderEvents();
+</script>
+
+</body>
+</html>
